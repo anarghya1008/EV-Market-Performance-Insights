@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ project.title }}</title>
+  <meta name="description" content="A data analytics capstone exploring an electric vehicle dataset with an interactive Tableau Public dashboard.">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <!-- Official Tableau Embedding API v3 (loaded from Tableau's documented CDN) -->
+  <script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
+  <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+  <a class="skip-link" href="#dashboard">Skip to dashboard</a>
+
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="EV Insights home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        EV Insights
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="menu">Menu</button>
+      <nav id="menu" class="menu" aria-label="Main">
+        <a href="#dashboard">Dashboard</a>
+        <a href="#kpis">Summary</a>
+        <a href="#objectives">Objectives</a>
+        <a href="#guide">Guide</a>
+        <a href="#insights">Insights</a>
+        <a href="#method">Method</a>
+        <a href="#limits">Limitations</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap">
+        <p class="kicker">Data analytics capstone</p>
+        <h1>{{ project.title }}</h1>
+        <p class="lead">An interactive Tableau dashboard exploring an electric vehicle dataset: categories, manufacturers, ratings, sales, batteries, price and range.</p>
+        <div class="actions">
+          <a class="btn primary" href="#dashboard">Explore the dashboard</a>
+          <a class="btn ghost" href="{{ tableau_url }}" target="_blank" rel="noopener noreferrer">Open on Tableau Public</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="dashboard" class="wrap section" aria-labelledby="dash-title">
+      <h2 id="dash-title">Interactive dashboard</h2>
+      <p class="muted">Click, filter and hover inside the dashboard. Everything here comes from the published Tableau workbook.</p>
+
+      <div class="viz-frame" id="vizFrame">
+        <div class="viz-loading" id="vizLoading" role="status" aria-live="polite">
+          <span class="spinner" aria-hidden="true"></span>
+          Loading the Tableau dashboard…
+        </div>
+        <div class="viz-error" id="vizError" hidden role="alert">
+          <p><strong>The dashboard did not load.</strong></p>
+          <p>Check your internet connection, then reload. If it still fails, make sure the dashboard is public on Tableau Public, or open it directly:</p>
+          <a class="btn primary" href="{{ tableau_url }}" target="_blank" rel="noopener noreferrer">Open on Tableau Public</a>
+        </div>
+        <tableau-viz id="tableauViz"
+                     src="{{ tableau_url }}"
+                     toolbar="bottom"
+                     hide-tabs>
+        </tableau-viz>
+      </div>
+    </section>
+
+    <section id="kpis" class="wrap section" aria-labelledby="kpi-title">
+      <h2 id="kpi-title">Dataset summary</h2>
+      <p class="muted">These are summary values from the dataset used in this project. They are not verified real-world market totals.</p>
+      <ul class="kpis">
+        {% for k in kpis %}
+        <li class="kpi">
+          <span class="kpi-value">{{ k.value }}<small>{% if k.unit %} {{ k.unit }}{% endif %}</small></span>
+          <span class="kpi-label">{{ k.label }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section id="objectives" class="wrap section" aria-labelledby="obj-title">
+      <h2 id="obj-title">Objectives and business questions</h2>
+      <div class="two-col">
+        <div>
+          <h3>Project objectives</h3>
+          <ul class="plain">{% for o in objectives %}<li>{{ o }}</li>{% endfor %}</ul>
+        </div>
+        <div>
+          <h3>Questions the dashboard helps answer</h3>
+          <ul class="plain">{% for q in questions %}<li>{{ q }}</li>{% endfor %}</ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="guide" class="wrap section" aria-labelledby="guide-title">
+      <h2 id="guide-title">Dashboard guide</h2>
+      <p class="muted">The types of analysis covered in the dashboard.</p>
+      <dl class="guide">
+        {% for name, desc in guide %}
+        <div class="guide-item"><dt>{{ name }}</dt><dd>{{ desc }}</dd></div>
+        {% endfor %}
+      </dl>
+    </section>
+
+    <section id="insights" class="wrap section" aria-labelledby="ins-title">
+      <h2 id="ins-title">Key insights</h2>
+      <p class="notice">Placeholders only. Replace each prompt with a finding you have confirmed in the dashboard.</p>
+      <ul class="insights">
+        <li><strong>Categories and manufacturers:</strong> [Add your confirmed finding here]</li>
+        <li><strong>Customer ratings:</strong> [Add your confirmed finding here]</li>
+        <li><strong>Sales by model year:</strong> [Add your confirmed finding here]</li>
+        <li><strong>Price, battery capacity and range:</strong> [Add your confirmed finding here]</li>
+        <li><strong>Efficiency:</strong> [Add your confirmed finding here]</li>
+      </ul>
+    </section>
+
+    <section id="method" class="wrap section" aria-labelledby="method-title">
+      <h2 id="method-title">Methodology and technology</h2>
+      <p>The analysis was built in Tableau Public from an EV dataset. Flask serves this page, and the Tableau Embedding API displays the published dashboard so visitors can interact with it directly.</p>
+      <ul class="stack">
+        {% for name, desc in tech_stack %}
+        <li><strong>{{ name }}</strong><span>{{ desc }}</span></li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section id="limits" class="wrap section" aria-labelledby="limit-title">
+      <h2 id="limit-title">Limitations</h2>
+      <ul class="plain">{% for l in limitations %}<li>{{ l }}</li>{% endfor %}</ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <p>{{ project.title }} · {{ project.author }}</p>
+      <p>
+        <a href="{{ tableau_url }}" target="_blank" rel="noopener noreferrer">Tableau Public dashboard</a>
+        <a href="{{ profile_url }}" target="_blank" rel="noopener noreferrer">Tableau Public profile</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
