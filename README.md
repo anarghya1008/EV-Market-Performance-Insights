@@ -45,16 +45,16 @@ The project includes a Flask web application that presents the EV dashboard and 
 Add your screenshots to the `screenshots/` folder in this repository. Update the filenames below if your actual filenames differ.
 
 ### Home Page
-![Flask Home Page](screenshots/flask.png)
+![Flask Home Page](screenshot/flask.png)
 
 ### Interactive Tableau Dashboard
-![Tableau Dashboard](screenshots/main_ashboard.png)
+![Tableau Dashboard](screenshot/main_ashboard.png)
 
 ### KPI Metrics
-![EV KPI Metrics](screenshots/kpi.png)
+![EV KPI Metrics](screenshot/kpi.png)
 
 ### Responsive Mobile View
-![Mobile Responsive View](screenshots/mobile_view.png)
+![Mobile Responsive View](screenshot/mobile_view.png)
 
 ## 📉 Dashboard Visualizations
 
