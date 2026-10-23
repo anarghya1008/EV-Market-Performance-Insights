@@ -48,13 +48,13 @@ Add your screenshots to the `screenshots/` folder in this repository. Update the
 ![Flask Home Page](Screenshot/flask.png)
 
 ### Interactive Tableau Dashboard
-![Tableau Dashboard](Screenshot/main_ashboard.png)
+![Tableau Dashboard](Screenshot/main_dashboard.png)
 
 ### KPI Metrics
 ![EV KPI Metrics](Screenshot/kpi.png)
 
 ### Responsive Mobile View
-![Mobile Responsive View](Screenshot/mobile_view.png)
+![Mobile Responsive View](Screenshot/mobil_view.png)
 
 ## 📉 Dashboard Visualizations
 
